@@ -4,22 +4,30 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node src/server.js",
+    "build:client": "parcel build src/client/index.html -d build/client",
+    "build:server": "exit 0",
+    "dev:client": "parcel watch src/client/index.html -d build/client",
+    "dev:server": "nodemon -w src/server/ src/server/server.js",
+    "dev": "concurrently -n w: npm:dev:*",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "Roman Lakhtadyr <roman.lakhtadyr@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@google-cloud/text-to-speech": "^2.1.0",
     "axios": "^0.19.0",
     "dotenv": "^8.2.0",
-    "ffmpeg-static": "^2.7.0",
     "koa": "^2.11.0",
+    "koa-better-static2": "^1.1.0",
     "koa-bodyparser": "^4.2.1",
-    "koa-router": "^7.4.0"
+    "koa-router": "^7.4.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
   },
   "devDependencies": {
+    "concurrently": "^5.0.2",
+    "nodemon": "^2.0.2",
+    "parcel-bundler": "^1.12.4",
     "prettier": "^1.19.1"
   }
 }
