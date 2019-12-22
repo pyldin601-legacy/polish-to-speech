@@ -23,7 +23,7 @@ async function synthesizeText(text) {
     return Buffer.from(audioContent, "base64");
   } catch (e) {
     if (e.response) {
-      throw new Error(`Could not synthesize: ${e.response.data}`);
+      throw new Error(`Could not synthesize: ${JSON.stringify(e.response.data)}`);
     }
     throw e;
   }
