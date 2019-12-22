@@ -4,8 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "clean": "rimraf build/",
     "build:client": "parcel build src/client/index.html -d build/client",
     "build:server": "exit 0",
+    "prebuild": "npm run clean",
+    "build": "npm run build:client && npm run build:server",
+    "start": "node src/server/server.js",
     "dev:client": "parcel watch src/client/index.html -d build/client",
     "dev:server": "nodemon -w src/server/ src/server/server.js",
     "dev": "concurrently -n w: npm:dev:*",
@@ -25,6 +29,7 @@
     "react": "^16.12.0",
     "react-bootstrap": "^1.0.0-beta.16",
     "react-dom": "^16.12.0",
+    "rimraf": "^3.0.0",
     "sha1": "^1.1.1"
   },
   "devDependencies": {
