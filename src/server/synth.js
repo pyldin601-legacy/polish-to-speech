@@ -16,9 +16,17 @@ async function synthesizeText(text) {
       speakingRate: 0.9
     }
   };
-  const response = await axios.post(endpoint, request);
-  const { audioContent } = response.data;
-  return Buffer.from(audioContent, "base64");
+
+  try {
+    const response = await axios.post(endpoint, request);
+    const { audioContent } = response.data;
+    return Buffer.from(audioContent, "base64");
+  } catch (e) {
+    if (e.response) {
+      throw new Error(`Could not synthesize: ${e.response.data}`);
+    }
+    throw e;
+  }
 }
 
 module.exports = { synthesizeText };
