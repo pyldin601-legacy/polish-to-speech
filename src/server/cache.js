@@ -5,8 +5,8 @@ const fsPromises = fs.promises;
 
 const { AUDIO_FILES_PATH } = process.env;
 
-function getTextCacheKey(text) {
-  return sha1(text);
+function getTextCacheKey(text, language) {
+  return sha1(`${text}-${language}`);
 }
 
 function getAudioFilePath(key) {

@@ -3,12 +3,15 @@ const axios = require("axios");
 const { TS_API_KEY } = process.env;
 const endpoint = `https://texttospeech.googleapis.com/v1/text:synthesize?key=${TS_API_KEY}`;
 
-async function synthesizeText(text) {
+async function synthesizeText(text, language) {
   const request = {
     input: { text },
-    voice: {
+    voice: language === "pl" ? {
       languageCode: "pl-PL",
       name: "pl-PL-Wavenet-B"
+    } : {
+      languageCode: "pt-PT",
+      name: "pt-PT-Wavenet-B"
     },
     audioConfig: {
       audioEncoding: "LINEAR16",

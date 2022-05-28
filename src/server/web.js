@@ -16,18 +16,18 @@ function createWebApp() {
   const router = new Router();
 
   router.post("/synthesize", bodyParser(), async ctx => {
-    const { text } = ctx.request.body;
+    const { text, language } = ctx.request.body;
 
     if (typeof text !== 'string') {
       ctx.throw(400);
     }
 
-    const cacheKey = getTextCacheKey(text);
+    const cacheKey = getTextCacheKey(text, language);
 
     if (!(await isCacheExists(cacheKey))) {
       await createCacheDirectory(cacheKey);
 
-      const audioBuffer = await synthesizeText(text);
+      const audioBuffer = await synthesizeText(text, language);
 
       await Promise.all([
         fsPromises.writeFile(getAudioFilePath(cacheKey), audioBuffer),
