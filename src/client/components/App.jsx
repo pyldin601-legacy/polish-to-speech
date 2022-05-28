@@ -1,6 +1,7 @@
 import React, {useState, useCallback} from "react";
 import {Container, Button, Grid, TextField, InputLabel, Select, MenuItem} from '@mui/material';
 import {synthesizeText} from "../api";
+import "./App.css"
 
 const App = () => {
     const [text, setText] = useState("");
