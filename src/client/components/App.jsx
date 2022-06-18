@@ -1,7 +1,17 @@
 import React, {useState, useCallback} from "react";
-import {Container, Button, Grid, TextField, InputLabel, Select, MenuItem} from '@mui/material';
+import {Grommet, Menu, TextArea, FormField, Button} from 'grommet';
 import {synthesizeText} from "../api";
 import "./App.css"
+
+const theme = {
+    global: {
+        font: {
+            family: 'Roboto',
+            size: '14px',
+            height: '20px',
+        },
+    },
+};
 
 const App = () => {
     const [text, setText] = useState("");
@@ -13,9 +23,9 @@ const App = () => {
         setText(event.target.value);
     }, []);
 
-    const handleLanguageChangeText = useCallback(event => {
-        setLanguage(event.target.value);
-        window.localStorage.setItem("lang", event.target.value);
+    const handleLanguageChangeText = useCallback(value => {
+        setLanguage(value);
+        window.localStorage.setItem("lang", value);
     }, []);
 
     const handleSubmitText = useCallback(
@@ -29,49 +39,42 @@ const App = () => {
         [text, language]
     );
 
+    const lags = [
+        {key: 'pl', label: "Polish", onClick: () => handleLanguageChangeText('pl')},
+        {key: 'pt', label: "Portuguese", onClick: () => handleLanguageChangeText('pt')}
+    ]
+
     return (
-        <Container>
-            <Grid container spacing={2} justifyContent="center" alignItems="center">
-                <Grid item xs={12}>
-                    <InputLabel>Text to synthesize:</InputLabel>
-                </Grid>
-                <Grid item xs={10}>
-                    <TextField multiline fullWidth value={text} onChange={handleChangeText}/>
-                </Grid>
-                <Grid item xs={2}>
-                    <Select
-                        fullWidth
-                        value={language}
-                        label="Language"
-                        onChange={handleLanguageChangeText}
-                    >
-                        <MenuItem value={"pl"}>Polish</MenuItem>
-                        <MenuItem value={"pt"}>Portuguese</MenuItem>
-                    </Select>
-                </Grid>
-                <Grid item xs={12}>
-                    <Button variant="primary" type="submit" onClick={handleSubmitText}>
-                        Synthesize
-                    </Button>
-                </Grid>
+        <Grommet theme={theme}>
+            <FormField label={"Text to synthesize:"}>
+                <TextArea multiline fullWidth value={text} onChange={handleChangeText}/>
+            </FormField>
+            <Menu
+                fullWidth
+                value={language}
+                label={lags.find(l => l.key === language)?.label}
+                onChange={handleLanguageChangeText}
+                items={lags}
+            />
 
-                {cacheKey && (
-                    <Grid item xs={12}>
-                        <figure>
-                            <figcaption>
-                                Listen "<b>{submittedText} ({language})</b>"
-                            </figcaption>
-                            <br/>
-                            <audio controls src={`/audio/${cacheKey}`} autoPlay>
-                                Your browser does not support the
-                                <code>audio</code> element.
-                            </audio>
-                        </figure>
-                    </Grid>
-                )}
+            <Button variant="primary" type="submit" onClick={handleSubmitText}>
+                Synthesize
+            </Button>
 
-            </Grid>
-        </Container>
+            {cacheKey && (
+                <figure>
+                    <figcaption>
+                        Listen "<b>{submittedText} ({language})</b>"
+                    </figcaption>
+                    <br/>
+                    <audio controls src={`/audio/${cacheKey}`} autoPlay>
+                        Your browser does not support the
+                        <code>audio</code> element.
+                    </audio>
+                </figure>
+            )}
+
+        </Grommet>
     );
 };
 

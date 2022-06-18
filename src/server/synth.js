@@ -16,7 +16,7 @@ async function synthesizeText(text, language) {
     audioConfig: {
       audioEncoding: "LINEAR16",
       pitch: 0,
-      speakingRate: 0.9
+      speakingRate: 0.5
     }
   };
 
