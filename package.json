@@ -36,7 +36,7 @@
   "devDependencies": {
     "@babel/core": "^7.18.5",
     "concurrently": "^7.2.2",
-    "nodemon": "^2.0.16",
+    "nodemon": "^2.0.20",
     "parcel-bundler": "^1.12.5",
     "prettier": "^2.7.1"
   }
